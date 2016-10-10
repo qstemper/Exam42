@@ -6,7 +6,7 @@
 /*   By: qstemper <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 08:35:15 by qstemper          #+#    #+#             */
-/*   Updated: 2016/10/10 09:35:56 by qstemper         ###   ########.fr       */
+/*   Updated: 2016/10/10 16:04:13 by qstemper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ int		*ft_rrange(int start, int end)
 	}
 	if (start > end)
 	{
-		tab[i] = end++;
-		i++;
+		while(tab[i])
+		{
+			tab[i] = end++;
+			i++;
+		}
 	}
 	return (tab);
 }

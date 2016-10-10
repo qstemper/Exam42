@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hidenp.c                                           :+:      :+:    :+:   */
+/*   ft_list_remove_if.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qstemper <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/07 18:30:19 by qstemper          #+#    #+#             */
-/*   Updated: 2016/10/07 18:50:55 by qstemper         ###   ########.fr       */
+/*   Created: 2016/10/10 15:13:02 by qstemper          #+#    #+#             */
+/*   Updated: 2016/10/10 15:29:35 by qstemper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stdlib.h>
 
-int main(int ac, char **av)
+void		ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
-	char	*s1;
-	char	*s2;
+	t_list	*tmp;
 
-	if (ac != 3)
+	tmp = *begin_list;
+	while (tmp)
 	{
-		write(1, "\n", 1);
-		return (1);
+		if (tmp->next && (*cmp)(tmp->next->data, data_ref) == 0)
+		{
+			free(tmp->next);
+			tmp->next = *begin_list->next-next;
+		}
+		tmp = tmp->next;
 	}
-	s1 = av[1];
-	s2 = av[2];
-	if (*s1 == '\0')
-	{
-		write(1, "1\n", 2);
-		return (0);
-	}
-	while (*s1 && *s2)
-	{
-		if (*s1 == *s2)
-			s1++;
-		s2++;
-	}
-	write(1, (*s1 ? "0\n" : "1\n"), 2);
-	return (0);
+	*begin_list = tmp;
 }

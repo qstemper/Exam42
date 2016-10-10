@@ -1,51 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fprime.c                                           :+:      :+:    :+:   */
+/*   hidenp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qstemper <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/10 11:09:45 by qstemper          #+#    #+#             */
-/*   Updated: 2016/10/10 12:14:50 by qstemper         ###   ########.fr       */
+/*   Created: 2016/10/07 18:30:19 by qstemper          #+#    #+#             */
+/*   Updated: 2016/10/10 14:13:39 by qstemper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 
-int		main(int ac, char **av)
+int main(int ac, char **av)
 {
-	int		aav;
-	int		prime;
+	char	*s1;
+	char	*s2;
 
-	if (ac != 2)
+	if (ac != 3)
 	{
-		printf("\n");
+		write(1, "\n", 1);
+		return (1);
+	}
+	s1 = av[1];
+	s2 = av[2];
+	if (*s1 == '\0')
+	{
+		write(1, "1\n", 2);
 		return (0);
 	}
-	aav = atoi(av[1]);
-	if (aav == 1)
+	while (*s1 && *s2)
 	{
-		printf("%d", aav);
-		return (0);
+		if (*s1 == *s2)
+			s1++;
+		s2++;
 	}
-	while (1)
-	{
-		prime = 1;
-		while (++prime <= aav)
-		{
-			if (aav % prime == 0)
-			{
-				printf("%d", prime);
-				aav /= prime;
-				break ;
-			}
-		}
-		if (aav == 1)
-			break ;
-		else
-			printf("*");
-	}
-	printf("\n");
+	write(1, (*s1 ? "0\n" : "1\n"), 2);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: qstemper <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 07:52:43 by qstemper          #+#    #+#             */
-/*   Updated: 2016/10/10 08:28:53 by qstemper         ###   ########.fr       */
+/*   Updated: 2016/10/10 13:57:34 by qstemper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		main(int ac, char **av)
 				av[i][j] -= 32;
 			else if (j != 0 && av[i][j] > 96 && av[i][j] < 123 && ft_isblank(av[i][j - 1]) == 1)
 				av[i][j] -= 32;
-			else if (j != 0 && av[i][j] > 65 && av[i][j] < 91 && ft_isblank(av[i][j - 1]) == 0)
+			else if (j != 0 && av[i][j] > 64 && av[i][j] < 91 && ft_isblank(av[i][j - 1]) == 0)
 				av[i][j] += 32;
 			write(1, &av[i][j], 1);
 		}
