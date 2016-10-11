@@ -5,52 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: qstemper <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/10 08:35:15 by qstemper          #+#    #+#             */
-/*   Updated: 2016/10/10 16:04:13 by qstemper         ###   ########.fr       */
+/*   Created: 2016/10/11 17:24:34 by qstemper          #+#    #+#             */
+/*   Updated: 2016/10/11 18:59:39 by qstemper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 
 int		*ft_rrange(int start, int end)
 {
-	int	*tab;
-	int	count;
-	int	i;
+	int		*tab;
+	int		count;
+	int		i;
 
 	tab = NULL;
 	count = 0;
 	if (start == end)
 		count = 1;
-	else if ((start >= 0 && end > 0 && start < end) || (start < 0 && end > 0))
+	else if (start < end)
 		count = end - start + 1;
-	else if ((start > 0 && end >= 0 && start > end) || (start > 0 && end < 0))
+	else 
 		count = start - end + 1;
-	else if (start < 0 && end <= 0 && start < end)
-		count = -(start + end) - 1;
-	else if (start <= 0 && end < 0 && start > end)
-		count = -(end + start) - 1;
 	if (!(tab = (int *)malloc(sizeof(int) * count)))
 		return (tab);
-	i = 0;
-	if (start == end)
-		tab[i] = start;
-	if (start < end)
+	tab[count] = (int)NULL;
+	i = -1;
+	while (++i < count)
 	{
-		while (tab[i])
-		{
+		if (start < end)
 			tab[i] = end--;
-			i++;
-		}
-	}
-	if (start > end)
-	{
-		while(tab[i])
-		{
+		else
 			tab[i] = end++;
-			i++;
-		}
 	}
 	return (tab);
 }

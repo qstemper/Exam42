@@ -6,94 +6,87 @@
 /*   By: qstemper <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 14:17:31 by qstemper          #+#    #+#             */
-/*   Updated: 2016/10/10 15:09:58 by qstemper         ###   ########.fr       */
+/*   Updated: 2016/10/11 18:23:46 by qstemper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-
-static int		ft_count_parts(char const *s, char c)
+int			ft_isblank(char c)
 {
-	int		cmpt;
-	int		var;
+	if  (c == ' ' || c == '\t' || c == '\v')
+		return (1);
+	return (0);
+}
+
+int			cw(char *str)
+{
+	int		count;
+	int		flag;
 	int		i;
 
-	cmpt = 0;
-	var = 0;
+	count = 0;
+	flag = 0;
 	i = 0;
-	while (s[i] != '\0')
+	while (str)
 	{
-		if (var == 0 && s[i] != c)
+		if (flag == 0 && ft_isblank(*str) == 0)
 		{
-			var = 1;
-			cmpt++;
+			flag = 1;
+			count++;
 		}
-		if (var == 1 && s[i] == c)
-			var = 0;
+		if (flag == 1 && ft_isblank(*str) == 1)
+			flag = 0;
 		i++;
 	}
-	return (cmpt);
+	return (count);
 }
 
-static size_t	ft_wordslength(char const *s, char c)
+int			wlen(char *str)
 {
-	size_t	length;
-	int		i;
+	int		len;
 
-	length = 0;
-	i = 0;
-	while (s[i] != '\0' && s[i] != c)
+	len = 0;
+	while (str && ft_isblank(*str) == 0)
 	{
-		length++;
-		i++;
+		len++;
+		str++;
 	}
-	return (length);
+	return (len);
 }
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
-{
-	char	*ptr;
-	size_t	i;
-
-	i = 0;
-	if ((ptr = (char *)malloc(sizeof(char) * len)) != NULL)
-	{
-		while (i < len)
-		{
-			ptr[i] = s[start + i];
-			i++;
-		}
-		return (ptr);
-	}
-	return (NULL);
-}
-
-char			**ft_split(const *s)
+char		**ft_split(char *str)
 {
 	char	**tab;
-	size_t	wd_len;
-	int		wd_nb;
+	int		count;
+	int		len;
 	int		i;
 	int		j;
 
+	tab = NULL;
+	if (!str)
+		return (tab);
 	i = 0;
 	j = 0;
-	wd_nb = ft_count_parts(s, ' ');
-	if ((tab = (char **)malloc(sizeof(char *) * wd_nb + 1)) == NULL)
-		return (NULL);
-	tab[wd_nb] = NULL;
-	while (wd_nb-- > 0)
+	count = cw(str);
+	if (!(tab = (char **)malloc(sizeof(char *) * count + 1)))
+		return (tab);
+	tab[count] = NULL;
+	while (count-- > 0)
 	{
-		while (s[i] != '\0' && s[i] == c)
+		while (str[i] != '\0' && ft_isblank(str[i]) == 1)
 			i++;
-		wd_len = ft_wordslength(s + i, ' ');
-		if (wd_len > 0)
+		len = wlen(str + i);
+		if (len > 0)
 		{
-			if (!(tab[j++] = ft_strsub(s, i, wd_len)))
-				return (NULL);
+			if (!(tab[j] = (char *)malloc(sizeof(char) * len)))
+				return (tab);
+			while (i < len)
+			{
+				tab[j] = str + i;
+				i++;
+			}
 		}
-		i = i + wd_len;
 	}
 	return (tab);
 }
