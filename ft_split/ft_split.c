@@ -6,7 +6,7 @@
 /*   By: qstemper <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/10 14:17:31 by qstemper          #+#    #+#             */
-/*   Updated: 2016/10/11 18:23:46 by qstemper         ###   ########.fr       */
+/*   Updated: 2016/10/12 12:11:47 by qstemper         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ int			cw(char *str)
 {
 	int		count;
 	int		flag;
-	int		i;
 
 	count = 0;
 	flag = 0;
-	i = 0;
-	while (str)
+	while (*str)
 	{
 		if (flag == 0 && ft_isblank(*str) == 0)
 		{
@@ -37,7 +35,7 @@ int			cw(char *str)
 		}
 		if (flag == 1 && ft_isblank(*str) == 1)
 			flag = 0;
-		i++;
+		str++;
 	}
 	return (count);
 }
@@ -47,7 +45,7 @@ int			wlen(char *str)
 	int		len;
 
 	len = 0;
-	while (str && ft_isblank(*str) == 0)
+	while (*str && ft_isblank(*str) == 0)
 	{
 		len++;
 		str++;
@@ -62,6 +60,7 @@ char		**ft_split(char *str)
 	int		len;
 	int		i;
 	int		j;
+	int		k;
 
 	tab = NULL;
 	if (!str)
@@ -69,7 +68,7 @@ char		**ft_split(char *str)
 	i = 0;
 	j = 0;
 	count = cw(str);
-	if (!(tab = (char **)malloc(sizeof(char *) * count + 1)))
+	if (!(tab = (char **)malloc(sizeof(char *) * (count + 1))))
 		return (tab);
 	tab[count] = NULL;
 	while (count-- > 0)
@@ -79,13 +78,16 @@ char		**ft_split(char *str)
 		len = wlen(str + i);
 		if (len > 0)
 		{
-			if (!(tab[j] = (char *)malloc(sizeof(char) * len)))
+			if (!(tab[j] = (char *)malloc(sizeof(char) * (len + 1))))
 				return (tab);
-			while (i < len)
+			k = -1;
+			tab[j][len] = '\0';
+			while (++k < len)
 			{
-				tab[j] = str + i;
+				tab[j][k] = str[i];
 				i++;
 			}
+			j++;
 		}
 	}
 	return (tab);
